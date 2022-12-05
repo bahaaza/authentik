@@ -5,6 +5,8 @@ WORKDIR /go/src/goauthentik.io
 
 COPY . .
 ENV CGO_ENABLED=0
+ENV AUTHENTIK_LDAP_ACTIVE_ATTR=goauthentik.io/ldap/active
+ENV AUTHENTIK_LDAP_SUPERUSER_ATTR=goauthentik.io/ldap/superuser
 RUN go build -o /go/ldap ./cmd/ldap
 
 # Stage 2: Run

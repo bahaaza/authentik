@@ -1,6 +1,7 @@
 """LDAP and Outpost e2e tests"""
 from dataclasses import asdict
 from sys import platform
+from os import getenv
 from time import sleep
 from unittest.case import skipUnless
 
@@ -224,8 +225,8 @@ class TestProviderLDAP(SeleniumTestCase):
                         "uidNumber": [str(2000 + o_user.pk)],
                         "gidNumber": [str(2000 + o_user.pk)],
                         "memberOf": [],
-                        "goauthentik.io/ldap/active": ["true"],
-                        "goauthentik.io/ldap/superuser": ["false"],
+                        getenv('AUTHENTIK_LDAP_ACTIVE_ATTR'): ["true"],
+                        getenv('AUTHENTIK_LDAP_SUPERUSER_ATTR'): ["false"],
                         "goauthentik.io/user/override-ips": ["true"],
                         "goauthentik.io/user/service-account": ["true"],
                     },
@@ -249,8 +250,8 @@ class TestProviderLDAP(SeleniumTestCase):
                         "uidNumber": [str(2000 + embedded_account.pk)],
                         "gidNumber": [str(2000 + embedded_account.pk)],
                         "memberOf": [],
-                        "goauthentik.io/ldap/active": ["true"],
-                        "goauthentik.io/ldap/superuser": ["false"],
+                        getenv('AUTHENTIK_LDAP_ACTIVE_ATTR'): ["true"],
+                        getenv('AUTHENTIK_LDAP_SUPERUSER_ATTR'): ["false"],
                         "goauthentik.io/user/override-ips": ["true"],
                         "goauthentik.io/user/service-account": ["true"],
                     },
@@ -277,8 +278,8 @@ class TestProviderLDAP(SeleniumTestCase):
                             f"cn={group.name},ou=groups,dc=ldap,dc=goauthentik,dc=io"
                             for group in self.user.ak_groups.all()
                         ],
-                        "goauthentik.io/ldap/active": ["true"],
-                        "goauthentik.io/ldap/superuser": ["true"],
+                        getenv('AUTHENTIK_LDAP_ACTIVE_ATTR'): ["true"],
+                        getenv('AUTHENTIK_LDAP_SUPERUSER_ATTR'): ["true"],
                         "extraAttribute": ["bar"],
                     },
                     "type": "searchResEntry",

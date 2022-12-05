@@ -1,6 +1,7 @@
 package ldap
 
 import (
+    "os"
 	"strconv"
 
 	"github.com/nmcclain/ldap"
@@ -21,8 +22,8 @@ func (pi *ProviderInstance) UserEntry(u api.User) *ldap.Entry {
 	}
 	attrs = utils.EnsureAttributes(attrs, map[string][]string{
 		"memberOf":                      pi.GroupsForUser(u),
-		"goauthentik.io/ldap/active":    {strconv.FormatBool(*u.IsActive)},
-		"goauthentik.io/ldap/superuser": {strconv.FormatBool(u.IsSuperuser)},
+		os.Getenv("AUTHENTIK_LDAP_ACTIVE_ATTR"):    {strconv.FormatBool(*u.IsActive)},
+		os.Getenv("AUTHENTIK_LDAP_SUPERUSER_ATTR"): {strconv.FormatBool(u.IsSuperuser)},
 		"cn":                            {u.Username},
 		"sAMAccountName":                {u.Username},
 		"uid":                           {u.Uid},
